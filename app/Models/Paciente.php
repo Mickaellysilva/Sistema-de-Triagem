@@ -22,4 +22,9 @@ class Paciente extends Model
     protected $casts = [
         'data_nascimento' => 'date',
     ];
+
+    public function triagens()
+{
+    return $this->hasMany(Triagem::class);
+}
 }

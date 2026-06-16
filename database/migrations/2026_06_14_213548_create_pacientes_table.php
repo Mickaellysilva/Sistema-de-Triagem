@@ -18,7 +18,7 @@ return new class extends Migration
             
             $table->string('cpf', 11)->unique()->nullable(); 
             $table->date('data_nascimento');
-            $table->string('contato'); 
+            $table->string('contato')->nullable(); 
             
             $table->string('nome_responsavel')->nullable();
             $table->string('cpf_responsavel', 11)->nullable();
