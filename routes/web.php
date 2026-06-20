@@ -3,6 +3,11 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\MedicoController;
+
+// Rotas do Médico
+Route::get('/medico', [MedicoController::class, 'index'])->name('medico.index');
+Route::post('/medico/finalizar/{id}', [MedicoController::class, 'finalizarConsulta'])->name('medico.finalizar');
 
 // Tela de login (A que você já criou)
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -22,3 +27,7 @@ Route::delete('/triagem/{id}', [PacienteController::class, 'destroy'])->name('tr
 Route::post('/triagem/adicionar', [PacienteController::class, 'adicionarNaFila'])->name('triagem.adicionar');
 
 Route::get('/dashboard', [PacienteController::class, 'index'])->name('dashboard');
+
+// Rotas do Médico
+Route::get('/medico', [MedicoController::class, 'index'])->name('medico.index');
+Route::post('/medico/finalizar/{id}', [MedicoController::class, 'finalizarConsulta'])->name('medico.finalizar');
