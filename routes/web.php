@@ -25,7 +25,7 @@ Route::get('/dashboard', [PacienteController::class, 'index'])->name('dashboard'
 
 // Outros Recursos do Grupo
 Route::get('/perfil', [FuncionarioController::class, 'perfil'])->name('funcionarios.perfil');
-Stop-Process -Name "php" -Forcefuncionarios', FuncionarioController::class);
+Route::resource('funcionarios', FuncionarioController::class);
 Route::resource('triagem', TriagemController::class);
 
 // --- SEU TRABALHO: Rotas do Médico ---
