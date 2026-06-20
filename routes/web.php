@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\FuncionarioController;  
+use App\Http\Controllers\TriagemController;
 
 // Tela de login (A que você já criou)
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -22,3 +24,9 @@ Route::delete('/triagem/{id}', [PacienteController::class, 'destroy'])->name('tr
 Route::post('/triagem/adicionar', [PacienteController::class, 'adicionarNaFila'])->name('triagem.adicionar');
 
 Route::get('/dashboard', [PacienteController::class, 'index'])->name('dashboard');
+
+Route::get('/perfil', [FuncionarioController::class, 'perfil'])->name('funcionarios.perfil');
+
+Route::resource('funcionarios', FuncionarioController::class);
+
+Route::resource('triagem', TriagemController::class);
