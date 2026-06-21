@@ -38,4 +38,4 @@ Route::post('/medico/finalizar/{id}', [MedicoController::class, 'finalizarConsul
 Route::post('/medico/chamar/{id}', [MedicoController::class, 'chamarPaciente'])->name('medico.chamar');
 
 
-Route::get('/painel', [TriagemController::class, 'painelTV'])->name('painel.chamada');
+Route::get('/', [TriagemController::class, 'painelTV'])->name('painel.chamada');
