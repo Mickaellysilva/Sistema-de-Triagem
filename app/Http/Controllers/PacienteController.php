@@ -62,7 +62,7 @@ public function adicionarNaFila(Request $request)
         'status' => 'aguardando'
     ]);
 
-    return redirect()->route('dashboard')->with('success', 'Paciente adicionado à fila com sucesso!');
+    return redirect()->route('recepcionista')->with('success', 'Paciente adicionado à fila com sucesso!');
 }
 
     public function store(Request $request)

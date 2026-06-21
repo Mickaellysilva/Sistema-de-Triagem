@@ -12,7 +12,18 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->intended('/dashboard');
+            $perfil = Auth::user()->perfil;
+
+            // Corrigido para usar os nomes reais das rotas do seu web.php
+            if ($perfil === 'Administrador') {
+                return redirect()->route('admin.index');
+            } elseif ($perfil === 'Recepcionista') {
+                return redirect()->route('recepcionista');
+            } elseif ($perfil === 'Enfermeiro') {
+                return redirect()->route('triagem.index');
+            } elseif ($perfil === 'Médico') {
+                return redirect()->route('medico.index');
+            }
         }
         
         return view('login.login');
@@ -32,7 +43,12 @@ class AuthController extends Controller
             'perfil.in' => 'Perfil inválido.'
         ]);
 
-        $perfilBanco = ucfirst($credentials['perfil']); 
+        if ($credentials['perfil'] === 'medico') {
+            $perfilBanco = 'Médico';
+        } else {
+            $perfilBanco = ucfirst($credentials['perfil']); 
+        }
+
         $funcionario = Funcionario::where('email', $credentials['email'])->first();
 
         if ($funcionario && Hash::check($credentials['senha'], $funcionario->senha)) {
@@ -46,7 +62,17 @@ class AuthController extends Controller
             Auth::login($funcionario);
             $request->session()->regenerate();
 
-            return redirect()->route('dashboard');
+            if ($funcionario->perfil === 'Administrador') {
+                return redirect()->route('admin.index');
+            } elseif ($funcionario->perfil === 'Recepcionista') {
+                return redirect()->route('recepcionista');
+            } elseif ($funcionario->perfil === 'Enfermeiro') {
+                return redirect()->route('triagem.index');
+            } elseif ($funcionario->perfil === 'Médico') {
+                return redirect()->route('medico.index');
+            }
+
+            return redirect('/login');
         }
 
         return back()->withErrors([

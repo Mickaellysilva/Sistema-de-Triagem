@@ -7,9 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Triagem extends Model
 {
     protected $table = 'triagens';
-    protected $fillable = ['paciente_id', 'status'];
+    
+    protected $fillable = [
+        'paciente_id', 
+        'sintomas', 
+        'pressao', 
+        'frequencia_cardiaca', 
+        'temperatura', 
+        'classificacao', 
+        'status'
+    ];
 
-    // Relacionamento: Uma linha da triagem pertence a um Paciente
     public function paciente()
     {
         return $this->belongsTo(Paciente::class, 'paciente_id');

@@ -17,6 +17,7 @@ return new class extends Migration
             
             $table->string('cpf', 11)->unique(); 
             $table->string('email')->unique();
+
             
             $table->string('senha'); 
             

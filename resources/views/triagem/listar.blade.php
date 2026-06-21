@@ -1,51 +1,48 @@
-<h2 class="text-xl font-bold text-slate-800 mb-4">Pacientes para triar</h2>
+<div class="space-y-3">
+    @forelse($fila as $key => $item)
+        @php
+            $is_atual = $key === 0;
+        @endphp
 
-<div class="space-y-1">
-    @if(count($pacientes) > 0)
-        @foreach($pacientes as $index => $paciente)
-            @php
-                $is_selected = isset($pacienteSelecionado) && $pacienteSelecionado->id == $paciente->id;
-            @endphp
-            
-            <a href="{{ route('triagem.index', ['paciente_id' => $paciente->id]) }}" 
-               class="flex items-center justify-between p-4 rounded-xl transition
-               {{ $is_selected ? 'bg-cyan-100/70' : 'bg-white hover:bg-slate-50' }}">
-                
-                <div class="flex items-center space-x-4">
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm bg-sky-100 text-cyan-700">
-                        {{ $index + 1 }}
-                    </div>
-                    
-                    <div>
-                    @if($is_selected)
-                        <p class="font-bold text-slate-800 text-sm">{{ $paciente->nome_completo }}</p>
-                        <p class="text-xs text-slate-400 mt-0.5">P-00{{ $paciente->id }} &middot; 51 anos &middot; desde 08:30</p>
-                    @else
-                        <p class="font-bold text-slate-800 text-sm">{{ $paciente->nome_completo }}</p>
-                        <p class="text-xs text-slate-400 mt-0.5">P-00{{ $paciente->id }} &middot; 51 anos &middot; desde 08:30</p>
-                    @endif
+        <div
+            class="flex items-center justify-between p-3 rounded-xl border {{ $is_atual ? 'bg-cyan-50/80 border-cyan-300 ring-1 ring-cyan-300' : 'border-slate-100 bg-white' }}">
+            <div class="flex items-center space-x-3">
+                <span
+                    class="bg-cyan-100 text-cyan-700 font-bold w-6 h-6 flex items-center justify-center rounded text-xs">
+                    {{ $key + 1 }}
+                </span>
+                <div>
+                    <h4 class="text-xs font-semibold text-slate-700">
+                        {{ $item->paciente->nome_completo }}
+                        @if ($is_atual && $item->status === 'em_triagem')
+                            <span
+                                class="text-[10px] text-cyan-600 font-bold ml-1 border border-cyan-400 px-1 rounded-md bg-white">
+                                Em Triagem
+                            </span>
+                        @endif
+                    </h4>
+                    <p class="text-[10px] text-slate-400 mt-0.5">
+                        CPF: {{ $item->paciente->cpf ?? 'Não informado' }} &bull; desde
+                        {{ $item->created_at->format('H:i') }}
+                    </p>
                 </div>
-                </div>
+            </div>
 
-                <div class="flex items-center space-x-3 text-cyan-500">
-                    <span class="hover:text-cyan-600 transition">
-                        <i class="fa-solid fa-volume-high text-sm"></i>
-                    </span>
-                    <span class="text-red-500 hover:text-red-600 transition">
-                        <i class="fa-regular fa-circle-xmark text-base"></i>
-                    </span>
-                </div>
-            </a>
-            
-            @if(!$is_selected && !$loop->last)
-                <div class="border-t border-slate-100 my-1"></div>
-            @endif
-        @endforeach
-    @else
-        <p class="text-sm text-slate-400 text-center py-4">Nenhum paciente aguardando.</p>
-    @endif
-</div>
-
-<div class="mt-4">
-    {{ $pacientes->appends(request()->query())->links() }}
+            <div class="flex items-center space-x-2 text-slate-400 text-xs">
+                @if ($is_atual && $item->status === 'aguardando')
+                    <form action="{{ route('triagem.chamar', $item->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-cyan-500 hover:text-cyan-600 transition p-1"
+                            title="Chamar paciente no Painel">
+                            <i class="fa-solid fa-volume-high text-sm"></i>
+                        </button>
+                    </form>
+                @else
+                    <i class="fa-solid fa-volume-high opacity-30"></i>
+                @endif
+            </div>
+        </div>
+    @empty
+        <p class="text-xs text-slate-400 italic text-center py-4">Nenhum paciente na fila de triagem.</p>
+    @endforelse
 </div>

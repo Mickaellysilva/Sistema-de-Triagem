@@ -13,13 +13,30 @@ return new class extends Migration
     {
         Schema::create('triagens', function (Blueprint $table) {
             $table->id();
-            // Cria o relacionamento com a sua tabela de pacientes
+            
+            // Relacionamento com a tabela de pacientes
             $table->foreignId('paciente_id')->constrained('pacientes')->onDelete('cascade');
             
-            // Status: 'aguardando', 'em_atendimento', 'concluido', 'removido'
-            $table->string('status')->default('aguardando'); 
+            // Dados clínicos (nullable para permitir que a recepção crie o registro inicial)
+            $table->text('sintomas')->nullable();
+            $table->string('pressao')->nullable(); // PA
+            $table->string('frequencia_cardiaca')->nullable(); // FC
+            $table->string('temperatura')->nullable(); // T°
             
-            $table->timestamps(); // O 'created_at' será o nosso horário de entrada na fila
+            // Nível de urgência do Protocolo de Manchester
+            $table->enum('classificacao', [
+                'emergencia', 
+                'muito_urgente', 
+                'urgente', 
+                'pouco_urgente', 
+                'nao_urgente'
+            ])->nullable();
+            
+            // Status do fluxo de atendimento
+            // 'aguardando_triagem' (com enfermeiro), 'aguardando_medico', 'em_atendimento', 'concluido'
+            $table->string('status')->default('aguardando_triagem'); 
+            
+            $table->timestamps();
         });
     }
 
