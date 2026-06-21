@@ -30,11 +30,7 @@
 
         <div class="flex items-center space-x-2 text-cyan-600 font-bold text-xl">
 
-            <div class="border-2 border-cyan-600 rounded-full p-1 flex items-center justify-center w-8 h-8">
-
-                <i class="fa-solid fa-plus text-xs"></i>
-
-            </div>
+            <img src="{{ asset('images/LogoOficial.svg') }}" alt="Logo Tria" class="w-8 h-8 object-contain">
 
             <span>Tria</span>
 
@@ -42,36 +38,28 @@
 
 
 
-        <nav class="flex items-center space-x-6 text-sm font-medium text-slate-600">
+        <nav class="flex items-center space-x-6 text-sm font-medium text-slate-600 align-middle">
 
-            <a href="{{ route('triagem.index') }}" class="text-cyan-600 font-semibold">Cadastro de Paciente</a>
+            <a href="{{ route('triagem.index') }}" class="text-cyan-600 font-semibold flex items-center h-full">
+                Cadastro de Paciente
+            </a>
 
-            <a href="#" class="hover:text-cyan-600 transition">Painel de Chamada</a>
-
-
-
-            <a href="#"
-                class="border border-cyan-500 text-cyan-600 px-4 py-1.5 rounded-full flex items-center space-x-2 hover:bg-cyan-50 transition">
-
+            <a href="{{ route('funcionarios.perfil') }}"
+                class="border border-cyan-500 text-cyan-600 px-4 py-1.5 rounded-full flex items-center space-x-2 bg-cyan-50 transition h-[34px]">
                 <i class="fa-regular fa-user"></i>
-
                 <span>Perfil</span>
-
             </a>
 
-
-
-            <a href=""
-                class="bg-cyan-500 text-white px-4 py-1.5 rounded-lg flex items-center space-x-2 hover:bg-cyan-600 transition">
-
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-
-                <span>Sair</span>
-
-            </a>
+            <form action="{{ route('logout') }}" method="POST" class="flex items-center m-0 p-0">
+                @csrf
+                <button type="submit"
+                    class="bg-cyan-500 text-white px-4 py-1.5 rounded-full flex items-center space-x-2 hover:bg-cyan-600 transition h-[34px] leading-none">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Sair</span>
+                </button>
+            </form>
 
         </nav>
-
     </header>
 
 
