@@ -9,21 +9,18 @@ use Illuminate\Http\Request;
 class TriagemController extends Controller
 {
     /**
-     * Tela principal da Triagem (Fila de Espera)
+     * Tela principal da Triagem (Fila de Espera do Profissional)
      */
     public function index(Request $request)
     {
-        // Pega todos os registros aguardando ou em atendimento na triagem, do mais antigo para o mais recente
         $fila = Triagem::with('paciente')
             ->whereIn('status', ['aguardando', 'em_triagem'])
             ->orderBy('created_at', 'asc')
             ->get();
 
-        // Contadores fixos para o painel superior
         $pacientesNaFila = Triagem::where('status', 'aguardando')->count();
         $triadosHoje = Triagem::where('status', 'aguardando_medico')->whereDate('updated_at', today())->count();
 
-        // Verifica se o primeiro da fila já está com status 'em_triagem' (ativado pelo botão de chamada)
         $primeiroDaFila = $fila->first();
         $pacienteSelecionado = null;
 
@@ -35,11 +32,10 @@ class TriagemController extends Controller
     }
 
     /**
-     * Aciona o primeiro paciente da fila (Gatilho idêntico ao do médico)
+     * Aciona o primeiro paciente da fila
      */
     public function chamarPaciente($id)
     {
-        // Garante que estamos chamando o registro correto e muda o status para a TV e formulário
         $triagem = Triagem::where('id', $id)->where('status', 'aguardando')->firstOrFail();
         
         $triagem->update([
@@ -82,5 +78,51 @@ class TriagemController extends Controller
 
         return redirect()->route('triagem.index')
                          ->with('success', 'Triagem concluída! Paciente enviado para a fila do médico.');
+    }
+
+  
+  
+   
+   /**
+     * Tela da TV / Recepção (Garante o congelamento definitivo no último chamado)
+     */
+    public function painelTV()
+    {
+        // 1. Prioridade Máxima: Quem está sendo chamado ATIVAMENTE (clique no botão agora)
+        $registro = Triagem::with('paciente')
+            ->whereIn('status', ['em_triagem', 'em_consulta'])
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+        // 2. Persistência Total: Se ninguém está ativo, congela no ÚLTIMO que sofreu alteração no dia
+        // Inclui todos os status para nunca deixar a tela vazia ou voltar para pacientes antigos
+        if (!$registro) {
+            $registro = Triagem::with('paciente')
+                ->whereIn('status', ['em_triagem', 'aguardando_medico', 'em_consulta', 'concluido'])
+                ->whereDate('updated_at', today())
+                ->orderBy('updated_at', 'desc') // Pega o último que passou pela mão de alguém
+                ->first();
+        }
+
+        $paciente = null;
+        if ($registro && $registro->paciente) {
+            
+            // REGRA ESTRITA DE DESTINO:
+            // SÓ vai para o Consultório Médico se o status for 'em_consulta' ou se já foi 'concluido' vindo do médico.
+            // Se o status for 'em_triagem' ou 'aguardando_medico' (esperando o médico), o destino FIXO na tela é a Triagem!
+            if ($registro->status === 'em_consulta' || ($registro->status === 'concluido' && $registro->classificacao)) {
+                $destino = 'CONSULTÓRIO MÉDICO';
+            } else {
+                $destino = 'SALA DE TRIAGEM';
+            }
+
+            $paciente = [
+                'nome'          => $registro->paciente->nome_completo,
+                'destino'       => $destino,
+                'classificacao' => $registro->classificacao ?? 'triagem'
+            ];
+        }
+
+        return view('painelChamada', compact('paciente'));
     }
 }

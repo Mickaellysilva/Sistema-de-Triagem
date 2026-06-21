@@ -16,7 +16,7 @@
 
         <div class="flex flex-col items-center justify-center text-center">
             <div class="w-36 h-36 md:w-60 md:h-60 bg-white rounded-full flex items-center justify-center p-4 shadow-md">
-                <img src="{{ Vite::asset('resources/images/LogoOficial.svg') }}" alt="Logo Tria"
+                <img src="{{ asset('images/LogoOficial.svg') }}" alt="Logo Tria"
                     class="w-full h-full object-cover rounded-full">
             </div>
             <h1 class="text-white text-4xl md:text-6xl font-light mt-4 tracking-wide text-[#1a5f7a]">

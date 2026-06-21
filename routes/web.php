@@ -38,5 +38,4 @@ Route::post('/medico/finalizar/{id}', [MedicoController::class, 'finalizarConsul
 Route::post('/medico/chamar/{id}', [MedicoController::class, 'chamarPaciente'])->name('medico.chamar');
 
 
-// Rota para abrir o painel de chamadas
-Route::get('/painel', [PainelController::class, 'index'])->name('painel.index');
+Route::get('/painel', [TriagemController::class, 'painelTV'])->name('painel.chamada');
