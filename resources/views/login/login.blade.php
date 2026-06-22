@@ -2,12 +2,22 @@
 <html lang="pt-BR">
 
 <head>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    html, body, button, input, select, textarea {
+        font-family: 'Montserrat', sans-serif !important;
+    }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tria - Acessar o sistema</title>
     <script src="https://cdn.tailwindcss.com"></script>
     @vite(['resources/js/login.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body class="bg-[#49c5e3] min-h-screen flex items-center justify-center p-4 sm:p-6 antialiased font-sans">
@@ -28,8 +38,8 @@
 
             <div class="flex items-center gap-3 md:gap-4 mb-6">
                 <div
-                    class="bg-[#00b4d8] text-white p-3 rounded-xl flex items-center justify-center text-lg md:text-xl shrink-0">
-                    <i class="fa-solid fa-right-to-bracket"></i>
+                    class="bg-[#00b4d8] text-white p-3 rounded-xl flex items-center justify-center text-lg md:text-xl shrink-0 w-12 h-12">
+                    <i data-lucide="log-in"></i>
                 </div>
                 <div>
                     <h2 class="text-lg md:text-xl font-bold text-gray-800 leading-tight">Acessar o sistema</h2>
@@ -45,8 +55,8 @@
                         class="border border-gray-200 rounded-xl p-2.5 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-[#00b4d8] has-[:checked]:bg-cyan-50/30">
                         <input type="radio" name="perfil" value="administrador" class="hidden"
                             {{ old('perfil', 'administrador') == 'administrador' ? 'checked' : '' }}>
-                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0">
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0 w-8 h-8 flex items-center justify-center">
+                            <i data-lucide="shield-check"></i>
                         </span>
                         <span class="text-xs md:text-sm font-semibold text-gray-700 truncate">Administrador</span>
                     </label>
@@ -55,8 +65,8 @@
                         class="border border-gray-200 rounded-xl p-2.5 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-[#00b4d8] has-[:checked]:bg-cyan-50/30">
                         <input type="radio" name="perfil" value="recepcionista" class="hidden"
                             {{ old('perfil') == 'recepcionista' ? 'checked' : '' }}>
-                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0">
-                            <i class="fa-solid fa-address-book"></i>
+                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0 w-8 h-8 flex items-center justify-center">
+                            <i data-lucide="clipboard-list"></i>
                         </span>
                         <span class="text-xs md:text-sm font-semibold text-gray-700 truncate">Recepcionista</span>
                     </label>
@@ -65,8 +75,8 @@
                         class="border border-gray-200 rounded-xl p-2.5 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-[#00b4d8] has-[:checked]:bg-cyan-50/30">
                         <input type="radio" name="perfil" value="enfermeiro" class="hidden"
                             {{ old('perfil') == 'enfermeiro' ? 'checked' : '' }}>
-                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0">
-                            <i class="fa-solid fa-heart-pulse"></i>
+                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0 w-8 h-8 flex items-center justify-center">
+                            <i data-lucide="activity"></i>
                         </span>
                         <span class="text-xs md:text-sm font-semibold text-gray-700 truncate">Enfermeiro</span>
                     </label>
@@ -75,8 +85,8 @@
                         class="border border-gray-200 rounded-xl p-2.5 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-[#00b4d8] has-[:checked]:bg-cyan-50/30">
                         <input type="radio" name="perfil" value="medico" class="hidden"
                             {{ old('perfil') == 'medico' ? 'checked' : '' }}>
-                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0">
-                            <i class="fa-solid fa-stethoscope"></i>
+                        <span class="text-[#00b4d8] bg-cyan-50 p-2 rounded-lg text-xs md:text-sm shrink-0 w-8 h-8 flex items-center justify-center">
+                            <i data-lucide="stethoscope"></i>
                         </span>
                         <span class="text-xs md:text-sm font-semibold text-gray-700 truncate">Médico</span>
                     </label>
@@ -139,6 +149,9 @@
         </div>
     </div>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

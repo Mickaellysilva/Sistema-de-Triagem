@@ -2,6 +2,15 @@
 <html lang="pt-BR">
 
 <head>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    html, body, button, input, select, textarea {
+        font-family: 'Montserrat', sans-serif !important;
+    }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tria - Editar Perfil</title>
@@ -27,19 +36,20 @@
                 <a href="{{ route('triagem.index') }}" class="hover:text-cyan-600 transition">Triagem</a>
             @endif
             
-            <a href="#" class="hover:text-cyan-600 transition">Painel de Chamada</a>
-
             <a href="{{ route('funcionarios.perfil') }}"
                 class="border border-cyan-500 text-cyan-600 px-4 py-1.5 rounded-full flex items-center space-x-2 bg-cyan-50 transition">
                 <i class="fa-regular fa-user"></i>
                 <span>Perfil</span>
             </a>
 
-            <a href="#"
-                class="bg-cyan-500 text-white px-4 py-1.5 rounded-lg flex items-center space-x-2 hover:bg-cyan-600 transition">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Sair</span>
-            </a>
+           <form action="{{ route('logout') }}" method="POST" class="flex items-center m-0 p-0">
+                @csrf
+                <button type="submit"
+                    class="bg-cyan-500 text-white px-4 py-1.5 rounded-full flex items-center space-x-2 hover:bg-cyan-600 transition h-[34px] leading-none">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Sair</span>
+                </button>
+            </form>
         </nav>
     </header>
 
