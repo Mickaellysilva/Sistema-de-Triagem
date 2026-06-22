@@ -32,7 +32,12 @@ class Funcionario extends Authenticatable
         'deleted_at' => 'datetime',
     ];
 
-    
+    // O LARAVEL PRECISA DISSO PARA SABER ONDE ESTÁ A SENHA CRIPIOGRAFADA
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
+
     public function isAdministrador(): bool { return $this->perfil === 'Administrador'; }
     public function isRecepcionista(): bool { return $this->perfil === 'Recepcionista'; }
     public function isEnfermeiro(): bool { return $this->perfil === 'Enfermeiro'; }

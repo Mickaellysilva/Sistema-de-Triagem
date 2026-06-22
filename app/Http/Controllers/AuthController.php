@@ -14,9 +14,9 @@ class AuthController extends Controller
         if (Auth::check()) {
             $perfil = Auth::user()->perfil;
 
-            // Corrigido para usar os nomes reais das rotas do seu web.php
+            // Ajustado para bater EXATAMENTE com os nomes do seu web.php
             if ($perfil === 'Administrador') {
-                return redirect()->route('admin.index');
+                return redirect()->route('admin'); // Corrigido aqui
             } elseif ($perfil === 'Recepcionista') {
                 return redirect()->route('recepcionista');
             } elseif ($perfil === 'Enfermeiro') {
@@ -59,11 +59,13 @@ class AuthController extends Controller
                 ])->withInput($request->only('email', 'perfil'));
             }
 
+            // Realiza o login na sessão
             Auth::login($funcionario);
             $request->session()->regenerate();
 
+            // Redirecionamentos corrigidos de acordo com o web.php
             if ($funcionario->perfil === 'Administrador') {
-                return redirect()->route('admin.index');
+                return redirect()->route('admin');
             } elseif ($funcionario->perfil === 'Recepcionista') {
                 return redirect()->route('recepcionista');
             } elseif ($funcionario->perfil === 'Enfermeiro') {

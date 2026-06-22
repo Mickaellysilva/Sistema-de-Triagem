@@ -41,7 +41,16 @@ class HospitalSeeder extends Seeder
                 'perfil' => 'Recepcionista',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            [
+                'nome' => 'Vanessa',
+                'cpf' => '23456778012',
+                'email' => 'administrador@tria.com',
+                'senha' => Hash::make('senha123'),
+                'perfil' => 'Administrador',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         // 2. Inserir Pacientes

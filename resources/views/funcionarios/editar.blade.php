@@ -4,12 +4,18 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
-    html, body, button, input, select, textarea {
-        font-family: 'Montserrat', sans-serif !important;
-    }
+        html,
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: 'Montserrat', sans-serif !important;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,25 +30,25 @@
     <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-2 text-cyan-600 font-bold text-xl">
             <div class="border-2 border-cyan-600 rounded-full p-1 flex items-center justify-center w-8 h-8">
-                <i class="fa-solid fa-plus text-xs"></i>
+                <img src="{{ asset('images/LogoOficial.svg') }}" alt="Logo Tria" class="w-8 h-8 object-contain">
             </div>
             <span>Tria</span>
         </div>
 
         <nav class="flex items-center space-x-6 text-sm font-medium text-slate-600">
-            @if(isset($funcionario) && $funcionario->perfil === 'Recepcionista')
+            @if (isset($funcionario) && $funcionario->perfil === 'Recepcionista')
                 <a href="{{ route('triagem.index') }}" class="hover:text-cyan-600 transition">Cadastro de Paciente</a>
             @else
                 <a href="{{ route('triagem.index') }}" class="hover:text-cyan-600 transition">Triagem</a>
             @endif
-            
+
             <a href="{{ route('funcionarios.perfil') }}"
                 class="border border-cyan-500 text-cyan-600 px-4 py-1.5 rounded-full flex items-center space-x-2 bg-cyan-50 transition">
                 <i class="fa-regular fa-user"></i>
                 <span>Perfil</span>
             </a>
 
-           <form action="{{ route('logout') }}" method="POST" class="flex items-center m-0 p-0">
+            <form action="{{ route('logout') }}" method="POST" class="flex items-center m-0 p-0">
                 @csrf
                 <button type="submit"
                     class="bg-cyan-500 text-white px-4 py-1.5 rounded-full flex items-center space-x-2 hover:bg-cyan-600 transition h-[34px] leading-none">
@@ -54,32 +60,38 @@
     </header>
 
     <main class="max-w-6xl mx-auto p-6 md:p-10 space-y-6">
-        
+
         <div>
             <h1 class="text-2xl font-bold text-slate-800">Editar Perfil</h1>
             <p class="text-sm text-cyan-600 font-medium mt-1">Atualize seus dados cadastrais.</p>
         </div>
 
-        <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST" enctype="multipart/form-data"
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             @csrf
             @method('PUT')
-            
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
-                <div class="relative w-32 h-32 flex items-center justify-center bg-sky-100 text-cyan-700 rounded-full font-bold text-3xl tracking-wider">
-                    @if(isset($funcionario) && $funcionario->foto_perfil)
-                        <img src="{{ asset('storage/' . $funcionario->foto_perfil) }}" alt="Foto de perfil" class="w-full h-full object-cover rounded-full">
+
+            <div
+                class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
+                <div
+                    class="relative w-32 h-32 flex items-center justify-center bg-sky-100 text-cyan-700 rounded-full font-bold text-3xl tracking-wider">
+                    @if (isset($funcionario) && $funcionario->foto_perfil)
+                        <img src="{{ asset('storage/' . $funcionario->foto_perfil) }}" alt="Foto de perfil"
+                            class="w-full h-full object-cover rounded-full">
                     @else
                         {{ isset($funcionario) ? mb_strtoupper(mb_substr($funcionario->nome, 0, 2)) : 'TR' }}
                     @endif
-                    
-                    <label for="foto_perfil" class="absolute bottom-0 right-0 bg-cyan-500 text-white p-2 rounded-full shadow-md hover:bg-cyan-600 transition cursor-pointer flex items-center justify-center">
+
+                    <label for="foto_perfil"
+                        class="absolute bottom-0 right-0 bg-cyan-500 text-white p-2 rounded-full shadow-md hover:bg-cyan-600 transition cursor-pointer flex items-center justify-center">
                         <i data-lucide="image" class="w-4 h-4"></i>
                     </label>
                     <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*" class="hidden">
                 </div>
-                
+
                 <div class="mt-6 space-y-1">
-                    <label for="foto_perfil" class="text-cyan-600 hover:text-cyan-700 font-semibold text-sm transition cursor-pointer">
+                    <label for="foto_perfil"
+                        class="text-cyan-600 hover:text-cyan-700 font-semibold text-sm transition cursor-pointer">
                         Alterar foto &middot; Fazer upload
                     </label>
                     <p class="text-slate-400 text-xs">JPG, PNG ou WEBP - até 2 MB</p>
@@ -90,12 +102,13 @@
                 <h2 class="text-xl font-bold text-slate-800 mb-4">Dados cadastrais</h2>
 
                 <div class="space-y-5">
-                    
+
                     <div>
                         <label for="nome" class="block text-sm font-semibold text-slate-700 mb-1.5">
                             Nome completo <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="nome" name="nome" value="{{ $funcionario->nome ?? '' }}" required
+                        <input type="text" id="nome" name="nome" value="{{ $funcionario->nome ?? '' }}"
+                            required
                             class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                     </div>
 
@@ -104,15 +117,17 @@
                             <label for="cpf" class="block text-sm font-semibold text-slate-700 mb-1.5">
                                 CPF <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="cpf" name="cpf" maxlength="11" value="{{ $funcionario->cpf ?? '' }}" placeholder="Apenas os 11 números" required
+                            <input type="text" id="cpf" name="cpf" maxlength="11"
+                                value="{{ $funcionario->cpf ?? '' }}" placeholder="Apenas os 11 números" required
                                 class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                         </div>
-                        
+
                         <div>
                             <label for="telefone" class="block text-sm font-semibold text-slate-700 mb-1.5">
                                 Telefone <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="telefone" name="telefone" value="{{ $funcionario->contato ?? '' }}" placeholder="(00) 00000-0000"
+                            <input type="text" id="telefone" name="telefone"
+                                value="{{ $funcionario->contato ?? '' }}" placeholder="(00) 00000-0000"
                                 class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                         </div>
                     </div>
@@ -121,29 +136,34 @@
                         <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">
                             E-mail de contato <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" id="email" name="email" value="{{ $funcionario->email ?? '' }}" required
+                        <input type="email" id="email" name="email" value="{{ $funcionario->email ?? '' }}"
+                            required
                             class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                     </div>
 
                     <div>
-                        <label for="perfil" class="block text-sm font-semibold text-slate-700 mb-1.5">Cargo / Função</label>
-                        <input type="text" id="perfil" name="perfil" value="{{ $funcionario->perfil ?? 'Enfermeiro' }}" readonly
+                        <label for="perfil" class="block text-sm font-semibold text-slate-700 mb-1.5">Cargo /
+                            Função</label>
+                        <input type="text" id="perfil" name="perfil"
+                            value="{{ $funcionario->perfil ?? 'Enfermeiro' }}" readonly
                             class="w-full px-3 py-2.5 bg-sky-50 border border-transparent rounded-lg text-slate-600 font-medium text-sm outline-none cursor-not-allowed">
-                        <p class="text-[11px] text-slate-400 mt-1">Sua função só pode ser alterada por um administrador.</p>
+                        <p class="text-[11px] text-slate-400 mt-1">Sua função só pode ser alterada por um
+                            administrador.</p>
                     </div>
 
-                    <div class="border-t border-slate-100 pt-5 flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-3">
-                        
-                        <a href="{{ route('funcionarios.perfil') }}" 
+                    <div
+                        class="border-t border-slate-100 pt-5 flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-3">
+
+                        <a href="{{ route('funcionarios.perfil') }}"
                             class="px-8 py-2.5 border border-cyan-500 text-cyan-600 font-semibold rounded-full hover:bg-cyan-50 transition text-sm text-center order-2 sm:order-1">
                             Cancelar
                         </a>
-                        
-                        <button type="submit" 
+
+                        <button type="submit"
                             class="px-8 py-2.5 bg-cyan-500 text-white font-semibold rounded-full hover:bg-cyan-600 transition text-sm shadow-sm order-1 sm:order-2">
                             Salvar alterações
                         </button>
-                        
+
                     </div>
 
                 </div>
