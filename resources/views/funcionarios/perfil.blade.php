@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 
 <head>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -36,8 +36,9 @@
                 <a href="{{ route('triagem.index') }}" class="hover:text-cyan-600 transition">Triagem</a>
             @endif
             
+            <a href="#" class="hover:text-cyan-600 transition">Painel de Chamada</a>
 
-            <a href="#"
+            <a href="{{ route('funcionarios.perfil') }}"
                 class="border border-cyan-500 text-cyan-600 px-4 py-1.5 rounded-full flex items-center space-x-2 bg-cyan-50 transition">
                 <i class="fa-regular fa-user"></i>
                 <span>Perfil</span>
@@ -67,21 +68,14 @@
                     @if(isset($funcionario) && $funcionario->foto_perfil)
                         <img src="{{ asset('storage/' . $funcionario->foto_perfil) }}" alt="Foto de perfil" class="w-full h-full object-cover rounded-full">
                     @else
-                        AC
+                        {{ isset($funcionario) ? mb_strtoupper(mb_substr($funcionario->nome, 0, 2)) : 'TR' }}
                     @endif
                     
                     <div class="absolute bottom-0 right-0 bg-cyan-500 text-white p-2 rounded-full shadow-md flex items-center justify-center pointer-events-none">
                         <i data-lucide="image" class="w-4 h-4"></i>
                     </div>
                 </div>
-                
-                <div class="mt-6 space-y-1">
-                    <span class="text-cyan-600 font-semibold text-sm pointer-events-none">
-                        Alterar foto &middot; Fazer upload
-                    </span>
-                    <p class="text-slate-400 text-xs">JPG, PNG ou WEBP - até 2 MB</p>
                 </div>
-            </div>
 
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 md:col-span-2 space-y-6">
                 <h2 class="text-xl font-bold text-slate-800 mb-4">Dados cadastrais</h2>
@@ -103,7 +97,7 @@
                         
                         <div>
                             <label for="telefone" class="block text-sm font-semibold text-slate-700 mb-1.5">Telefone</label>
-                            <input type="text" id="telefone" value="{{ $funcionario->telefone ?? '' }}" disabled
+                            <input type="text" id="telefone" value="{{ $funcionario->contato ?? 'Não informado' }}" disabled
                                 class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 text-sm outline-none cursor-not-allowed">
                         </div>
                     </div>
