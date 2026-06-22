@@ -7,6 +7,9 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\TriagemController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PainelController;
+use App\Models\Funcionario;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\gestaoFuncionarios;
 
 // Tela de login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -39,3 +42,10 @@ Route::post('/medico/chamar/{id}', [MedicoController::class, 'chamarPaciente'])-
 
 
 Route::get('/', [TriagemController::class, 'painelTV'])->name('painel.chamada');
+
+
+// gestão funcionarios - ADMIN
+
+Route::get('/gestaoFuncionarios', [\App\Http\Controllers\FuncionarioController::class, 'index']);
+Route::post('/gestaoFuncionarios', [\App\Http\Controllers\FuncionarioController::class, 'store']);
+
