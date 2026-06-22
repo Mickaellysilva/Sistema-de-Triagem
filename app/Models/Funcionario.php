@@ -17,6 +17,7 @@ class Funcionario extends Authenticatable
         'nome',
         'cpf',
         'email',
+        'contato',
         'senha',
         'perfil',
         'foto_perfil',
