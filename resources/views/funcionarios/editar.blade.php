@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 
 <head>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -60,7 +60,7 @@
             <p class="text-sm text-cyan-600 font-medium mt-1">Atualize seus dados cadastrais.</p>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <form action="{{ route('funcionarios.update', $funcionario->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             @csrf
             @method('PUT')
             
@@ -69,7 +69,7 @@
                     @if(isset($funcionario) && $funcionario->foto_perfil)
                         <img src="{{ asset('storage/' . $funcionario->foto_perfil) }}" alt="Foto de perfil" class="w-full h-full object-cover rounded-full">
                     @else
-                        AC
+                        {{ isset($funcionario) ? mb_strtoupper(mb_substr($funcionario->nome, 0, 2)) : 'TR' }}
                     @endif
                     
                     <label for="foto_perfil" class="absolute bottom-0 right-0 bg-cyan-500 text-white p-2 rounded-full shadow-md hover:bg-cyan-600 transition cursor-pointer flex items-center justify-center">
@@ -95,7 +95,7 @@
                         <label for="nome" class="block text-sm font-semibold text-slate-700 mb-1.5">
                             Nome completo <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="nome" name="nome" value="{{ $funcionario->nome ?? '' }}"
+                        <input type="text" id="nome" name="nome" value="{{ $funcionario->nome ?? '' }}" required
                             class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                     </div>
 
@@ -104,7 +104,7 @@
                             <label for="cpf" class="block text-sm font-semibold text-slate-700 mb-1.5">
                                 CPF <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="cpf" name="cpf" maxlength="11" value="{{ $funcionario->cpf ?? '' }}" placeholder="Apenas os 11 números"
+                            <input type="text" id="cpf" name="cpf" maxlength="11" value="{{ $funcionario->cpf ?? '' }}" placeholder="Apenas os 11 números" required
                                 class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                         </div>
                         
@@ -112,7 +112,7 @@
                             <label for="telefone" class="block text-sm font-semibold text-slate-700 mb-1.5">
                                 Telefone <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="telefone" name="telefone" value="{{ $funcionario->telefone ?? '' }}" placeholder="(00) 00000-0000"
+                            <input type="text" id="telefone" name="telefone" value="{{ $funcionario->contato ?? '' }}" placeholder="(00) 00000-0000"
                                 class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">
                             E-mail de contato <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" id="email" name="email" value="{{ $funcionario->email ?? '' }}"
+                        <input type="email" id="email" name="email" value="{{ $funcionario->email ?? '' }}" required
                             class="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-cyan-500 transition text-sm">
                     </div>
 
